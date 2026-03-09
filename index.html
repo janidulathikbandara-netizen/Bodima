@@ -3,10 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bodima</title>
+    <title>Bodima - Boarding House Payment</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Welcome to Bodima</h1>
-    <p>This is your new index.html file.</p>
+    <div class="container">
+        <header>
+            <h1>🏠 Bodima Payment Tracker</h1>
+            <p>Track monthly rent and daily expenses for all boarders</p>
+        </header>
+
+        <div class="dashboard-grid">
+            <!-- Monthly Rent Section -->
+            <div class="card">
+                <h2>Monthly Rent Rates</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Boarder</th>
+                            <th>Monthly Rent</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rent-table-body">
+                        <!-- Content via JS -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Expense Entry Section -->
+            <div class="card">
+                <h2>Add Daily Expense</h2>
+                <form id="expense-form">
+                    <div class="form-group">
+                        <label for="boarder-select">Select Boarder</label>
+                        <select id="boarder-select" required>
+                            <!-- Content via JS -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="expense-desc">Description</label>
+                        <input type="text" id="expense-desc" placeholder="e.g. Electricity, Food, Repair" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="expense-amount">Amount ($)</label>
+                        <input type="number" id="expense-amount" step="0.01" min="0" placeholder="0.00" required>
+                    </div>
+                    <button type="submit">Add Expense</button>
+                </form>
+            </div>
+
+            <!-- Expense History Section -->
+            <div class="card summary-card">
+                <h2>Expense History</h2>
+                <div style="max-height: 300px; overflow-y: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Boarder</th>
+                                <th>Description</th>
+                                <th>Amount</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="expense-table-body">
+                            <!-- Content via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Total Payment Summary Section -->
+            <div class="card summary-card">
+                <h2>Total Payment Summary</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Boarder</th>
+                            <th>Base Rent</th>
+                            <th>Total Expenses</th>
+                            <th>Total Due</th>
+                        </tr>
+                    </thead>
+                    <tbody id="summary-table-body">
+                        <!-- Content via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
