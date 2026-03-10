@@ -1,14 +1,18 @@
 // Initial Boarders Data
 let boarders = JSON.parse(localStorage.getItem('bodima_boarders')) || [
-    { id: 1, name: "Alice Smith", rent: 500 },
-    { id: 2, name: "Bob Jones", rent: 450 },
-    { id: 3, name: "Charlie Brown", rent: 600 }
+    { id: 1, name: "Janidu", rent: 15000 },
+    { id: 2, name: "Manitha", rent: 15000 },
+    { id: 3, name: "Minuga", rent: 15000 },
+    { id: 4, name: "Oshada", rent: 15000 },
+    { id: 5, name: "Venuja", rent: 15000 }
 ];
 
 let expenses = JSON.parse(localStorage.getItem('bodima_expenses')) || [];
 
 // DOM Elements
 const boarderSelect = document.getElementById('boarder-select');
+const filterBoarder = document.getElementById('filter-boarder');
+const filterDesc = document.getElementById('filter-desc');
 const expenseForm = document.getElementById('expense-form');
 const expenseTableBody = document.getElementById('expense-table-body');
 const summaryTableBody = document.getElementById('summary-table-body');
@@ -24,13 +28,9 @@ function init() {
 
 // Populate Boarder Selection Dropdown
 function populateBoarderSelect() {
-    boarderSelect.innerHTML = '<option value="">Select a boarder</option>';
-    boarders.forEach(boarder => {
-        const option = document.createElement('option');
-        option.value = boarder.id;
-        option.textContent = boarder.name;
-        boarderSelect.appendChild(option);
-    });
+    const options = boarders.map(boarder => `<option value="${boarder.id}">${boarder.name}</option>`).join('');
+    boarderSelect.innerHTML = '<option value="">Select a boarder</option>' + options;
+    filterBoarder.innerHTML = '<option value="">All Boarders</option>' + options;
 }
 
 // Render Rent Info Table
@@ -40,7 +40,7 @@ function renderRentTable() {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${boarder.name}</td>
-            <td class="amount">$${boarder.rent.toFixed(2)}</td>
+            <td class="amount">LKR ${boarder.rent.toFixed(2)}</td>
         `;
         rentTableBody.appendChild(row);
     });
@@ -49,14 +49,25 @@ function renderRentTable() {
 // Render Expense History Table
 function renderExpenseTable() {
     expenseTableBody.innerHTML = '';
-    expenses.forEach((expense, index) => {
+    
+    const selectedBoarderId = filterBoarder.value;
+    const searchDesc = filterDesc.value.toLowerCase();
+
+    const filteredExpenses = expenses.filter(expense => {
+        const boarderMatch = !selectedBoarderId || expense.boarderId == selectedBoarderId;
+        const descMatch = !searchDesc || expense.description.toLowerCase().includes(searchDesc);
+        return boarderMatch && descMatch;
+    });
+
+    filteredExpenses.forEach((expense) => {
         const boarder = boarders.find(b => b.id == expense.boarderId);
         const row = document.createElement('tr');
+        const formattedDate = new Date(expense.date).toLocaleDateString();
         row.innerHTML = `
+            <td>${formattedDate}</td>
             <td>${boarder ? boarder.name : 'Unknown'}</td>
             <td>${expense.description}</td>
-            <td class="amount">$${expense.amount.toFixed(2)}</td>
-            <td><button class="delete-btn" onclick="deleteExpense(${index})">Delete</button></td>
+            <td class="amount">LKR ${expense.amount.toFixed(2)}</td>
         `;
         expenseTableBody.appendChild(row);
     });
@@ -65,34 +76,19 @@ function renderExpenseTable() {
 // Render Final Summary Table
 function renderSummaryTable() {
     summaryTableBody.innerHTML = '';
-    let grandTotal = 0;
 
     boarders.forEach(boarder => {
         const boarderExpenses = expenses
             .filter(e => e.boarderId == boarder.id)
             .reduce((sum, e) => sum + e.amount, 0);
         
-        const total = boarder.rent + boarderExpenses;
-        grandTotal += total;
-
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${boarder.name}</td>
-            <td class="amount">$${boarder.rent.toFixed(2)}</td>
-            <td class="amount">$${boarderExpenses.toFixed(2)}</td>
-            <td class="amount">$${total.toFixed(2)}</td>
+            <td class="amount">LKR ${boarderExpenses.toFixed(2)}</td>
         `;
         summaryTableBody.appendChild(row);
     });
-
-    // Add Grand Total Row
-    const totalRow = document.createElement('tr');
-    totalRow.className = 'total-row';
-    totalRow.innerHTML = `
-        <td colspan="3">Overall Monthly Collection</td>
-        <td class="amount">$${grandTotal.toFixed(2)}</td>
-    `;
-    summaryTableBody.appendChild(totalRow);
 }
 
 // Handle Form Submission
@@ -122,18 +118,25 @@ expenseForm.addEventListener('submit', (e) => {
     expenseForm.reset();
 });
 
-// Delete Expense
-function deleteExpense(index) {
-    expenses.splice(index, 1);
-    saveData();
+// Event Listeners for Filters
+filterBoarder.addEventListener('change', () => {
+    const val = filterBoarder.value;
+    const analyzeLink = document.querySelector('.nav-link');
+    if (analyzeLink) {
+        analyzeLink.href = val ? `analysis.html?boarder=${val}` : 'analysis.html';
+    }
     renderExpenseTable();
-    renderSummaryTable();
-}
+});
+filterDesc.addEventListener('input', renderExpenseTable);
 
 // Save to LocalStorage
 function saveData() {
     localStorage.setItem('bodima_expenses', JSON.stringify(expenses));
+    localStorage.setItem('bodima_boarders', JSON.stringify(boarders));
 }
 
 // Initialize on load
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded', () => {
+    init();
+    saveData(); // Ensure defaults are in localStorage
+});

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Analysis - Bodima</title>
+    <link rel="stylesheet" href="analysis.css">
+    <!-- Chart.js for beautiful charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 Expense Analysis</h1>
+            <p>Visualize spending patterns across boarders</p>
+            <div style="margin-top: 20px;">
+                <a href="index.html" onclick="handleBackToDashboard(event)" class="nav-link">⬅ Back to Dashboard</a>
+            </div>
+        </header>
+
+        <div class="analysis-controls card">
+            <div class="form-group">
+                <label for="boarder-filter">Select Boarder to Analyze</label>
+                <select id="boarder-filter">
+                    <option value="all">All Boarders</option>
+                    <!-- Content via JS -->
+                </select>
+            </div>
+        </div>
+
+        <div class="charts-grid">
+            <!-- Monthly Trends -->
+            <div class="card chart-card">
+                <h2>Monthly Expense Trends</h2>
+                <div class="chart-container">
+                    <canvas id="monthlyChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Daily Breakdown -->
+            <div class="card chart-card">
+                <h2>Daily Expense Breakdown (Current Month)</h2>
+                <div class="chart-container">
+                    <canvas id="dailyChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="analysis.js"></script>
+</body>
+</html>

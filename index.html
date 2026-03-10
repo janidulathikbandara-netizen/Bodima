@@ -3,20 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bodima - Boarding House Payment</title>
+    <title>Boarding Payments and Expenses</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>🏠 Bodima Payment Tracker</h1>
+            <h1>🏠 Boarding Payments and Expenses</h1>
             <p>Track monthly rent and daily expenses for all boarders</p>
         </header>
 
         <div class="dashboard-grid">
             <!-- Monthly Rent Section -->
             <div class="card">
-                <h2>Monthly Rent Rates</h2>
+                <h2>Monthly Rent</h2>
+                <div class="rent-highlight">
+                    <ul>
+                        <li>Overall monthly rent is <strong>75000 LKR</strong></li>
+                        <li>All of you must pay the rent on <strong>2<sup>nd</sup> day</strong> of every month</li>
+                    </ul>
+                </div>
                 <table>
                     <thead>
                         <tr>
@@ -45,7 +51,7 @@
                         <input type="text" id="expense-desc" placeholder="e.g. Electricity, Food, Repair" required>
                     </div>
                     <div class="form-group">
-                        <label for="expense-amount">Amount ($)</label>
+                        <label for="expense-amount">Amount (LKR)</label>
                         <input type="number" id="expense-amount" step="0.01" min="0" placeholder="0.00" required>
                     </div>
                     <button type="submit">Add Expense</button>
@@ -55,14 +61,29 @@
             <!-- Expense History Section -->
             <div class="card summary-card">
                 <h2>Expense History</h2>
+                
+                <div class="filter-section">
+                    <div class="form-group">
+                        <label>Filter by Boarder</label>
+                        <select id="filter-boarder">
+                            <option value="">All Boarders</option>
+                            <!-- Content via JS -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Filter by Description</label>
+                        <input type="text" id="filter-desc" placeholder="Search description...">
+                    </div>
+                </div>
+
                 <div style="max-height: 300px; overflow-y: auto;">
                     <table>
                         <thead>
                             <tr>
+                                <th>Date</th>
                                 <th>Boarder</th>
                                 <th>Description</th>
                                 <th>Amount</th>
-                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody id="expense-table-body">
@@ -79,9 +100,7 @@
                     <thead>
                         <tr>
                             <th>Boarder</th>
-                            <th>Base Rent</th>
                             <th>Total Expenses</th>
-                            <th>Total Due</th>
                         </tr>
                     </thead>
                     <tbody id="summary-table-body">
@@ -89,6 +108,10 @@
                     </tbody>
                 </table>
             </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px; margin-bottom: 20px;">
+            <a href="analysis.html" class="nav-link" target="_blank">📊 View and Analyze Expenses</a>
         </div>
     </div>
 
