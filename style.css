@@ -1,0 +1,243 @@
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #34495e;
+    --accent-color: #3498db;
+    --success-color: #27ae60;
+    --danger-color: #e74c3c;
+    --bg-color: #f4f7f6;
+    --card-bg: #ffffff;
+    --text-color: #333;
+    --border-radius: 8px;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    padding: 1rem;
+}
+
+@media (min-width: 768px) {
+    body {
+        padding: 2rem;
+    }
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+header h1 {
+    color: var(--primary-color);
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    margin-bottom: 0.5rem;
+}
+
+header p {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: var(--secondary-color);
+}
+
+.nav-link {
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    background-color: var(--accent-color);
+    color: white;
+    text-decoration: none;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.nav-link:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 350px), 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* TV and Large Screens */
+@media (min-width: 1600px) {
+    .container {
+        max-width: 1400px;
+    }
+    .dashboard-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.card {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.card h2 {
+    margin-bottom: 1.5rem;
+    color: var(--secondary-color);
+    border-bottom: 2px solid var(--accent-color);
+    padding-bottom: 0.5rem;
+    font-size: 1.3rem;
+}
+
+/* Tables scroll on small screens */
+.card table-wrapper, .card {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 400px; /* Ensures table doesn't get too squashed */
+}
+
+@media (max-width: 480px) {
+    table {
+        font-size: 0.9rem;
+    }
+    th, td {
+        padding: 8px;
+    }
+}
+
+/* Filter Section */
+.filter-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+}
+
+@media (max-width: 600px) {
+    .filter-section {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Forms */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+button {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s ease;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+th {
+    background-color: #f8f9fa;
+    color: var(--primary-color);
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+.total-row {
+    font-weight: bold;
+    color: var(--primary-color);
+    background-color: #f8f9fa;
+}
+
+.summary-card {
+    grid-column: 1 / -1;
+}
+
+.rent-highlight {
+    background-color: #e8f4fd;
+    border-left: 4px solid var(--accent-color);
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    color: var(--primary-color);
+}
+
+.rent-highlight ul {
+    list-style-position: outside;
+    padding-left: 1.2rem;
+    margin: 0;
+}
+
+.rent-highlight li {
+    margin-bottom: 5px;
+    line-height: 1.4;
+}
+
+.amount {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+}
+
+sup {
+    font-size: 0.6em;
+    vertical-align: baseline;
+    position: relative;
+    top: -0.4em;
+}
